@@ -1,18 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const ordersController = require("../../../controllers/api/v1/orders");
 
-router.get("/", (req, res) => {
-  res.send("GET orders");
-});
+router.get("/", ordersController.getAll);
 
-router.post("/", (req, res) => {
-  res.send("POST orders");
-});
+router.post("/", ordersController.create);
 
-router.put("/:id", (req, res) => {
-  res.send("PUT orders");
-});
+router.put("/:id", ordersController.update);
 
-router.delete("/:id", (req, res) => {
-  res.send("DELETE orders");
-});
+router.delete("/:id", ordersController.remove);
+
+module.exports = router;
