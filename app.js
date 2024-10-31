@@ -6,8 +6,10 @@ var logger = require("morgan");
 const admin = require("./middleware/admin");
 var orderRouter = require("./routes/api/v1/orders");
 var usersRouter = require("./routes/users");
+const cors = require("cors");
 
 var app = express();
+const cors = require("cors"); 
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
