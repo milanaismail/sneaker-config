@@ -6,6 +6,8 @@ var logger = require("morgan");
 const admin = require("./middleware/admin");
 var orderRouter = require("./routes/api/v1/orders");
 var usersRouter = require("./routes/users");
+//cors
+const cors = require("cors");
 
 
 var app = express();
