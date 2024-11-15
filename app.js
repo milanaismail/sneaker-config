@@ -7,7 +7,7 @@ const cors = require("cors");
 
 const admin = require("./middleware/admin");
 var orderRouter = require("./routes/api/v1/orders");
-var usersRouter = require("./routes/users");
+var usersRouter = require("./routes/api/v1/users");
 
 const mongoose = require("mongoose");
 const uri = "mongodb+srv://milanais:exF4C2AqiKzb0fqx@cluster0.8mhkb.mongodb.net/sneaker-config?retryWrites=true&w=majority";
@@ -27,9 +27,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(cors());
 
 app.use("/api/v1/orders", orderRouter);
-app.use("/users", usersRouter);
+app.use("/api/v1/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -55,7 +56,6 @@ var router = express.Router();
 
 // Importeer controllers
 const ordersController = require("../../../controllers/api/v1/orders.js");
-const admin = require("../../../middleware/admin.js");
 
 // GET /api/v1/orders - Get all orders
 router.get("/", async (req, res) => {
