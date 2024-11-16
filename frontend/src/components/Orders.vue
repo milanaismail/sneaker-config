@@ -20,7 +20,7 @@
     },
     async created() {
       try {
-        const response = await fetch("https://sneaker-config.onrender.com/api/orders");
+        const response = await fetch("https://sneaker-config.onrender.com/api/v1/orders");
         if (!response.ok) {
           throw new Error("Failed to fetch orders");
         }
