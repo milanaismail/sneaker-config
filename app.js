@@ -5,7 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
 
-const admin = require("./middleware/auth");
+const adminRouter = require("./routes/api/v1/admin");
 var orderRouter = require("./routes/api/v1/orders");
 var usersRouter = require("./routes/api/v1/users");
 
@@ -37,6 +37,7 @@ app.use(
 );
 app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/admin", adminRouter);
 // Serve static files from the Vite build directory
 app.use(express.static(path.join(__dirname, "frontend/dist")));
 

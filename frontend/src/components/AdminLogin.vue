@@ -22,7 +22,7 @@
     methods: {
       async login() {
         try {
-          const response = await fetch("https://sneaker-config.onrender.com/api/admin/login", {
+          const response = await fetch("https://sneaker-config.onrender.com/api/v1/admin/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: this.email, password: this.password }),
