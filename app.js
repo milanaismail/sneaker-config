@@ -10,9 +10,11 @@ var orderRouter = require("./routes/api/v1/orders");
 var usersRouter = require("./routes/api/v1/users");
 
 const mongoose = require("mongoose");
-const uri = "mongodb+srv://milanais:exF4C2AqiKzb0fqx@cluster0.8mhkb.mongodb.net/?retryWrites=true&w=majority";
+const uri =
+  "mongodb+srv://milanais:exF4C2AqiKzb0fqx@cluster0.8mhkb.mongodb.net/?retryWrites=true&w=majority";
 
-mongoose.connect(uri)
+mongoose
+  .connect(uri)
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((error) => console.error("Error connecting to MongoDB Atlas:", error));
 
@@ -30,7 +32,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow requests from your Vue dev server
+    origin: ["http://localhost:5173", "http://localhost:5175"], // Allow requests from your Vue dev server
     methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific HTTP methods
     credentials: true, // If your API uses cookies or other credentials
   })
