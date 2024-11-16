@@ -13,18 +13,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="order in orders" :key="order.id">
-          <td>{{ order.id }}</td>
+        <tr v-for="order in orders" :key="order._id">
+          <td>{{ order._id }}</td>
           <td>{{ formatDate(order.createdAt) }}</td>
-          <td>{{ order.customer.name }}</td>
+          <td>{{ order.customer.fullName }}</td>
           <td>{{ order.totalPrice }}</td>
           <td>{{ order.status }}</td>
           <td>
-            <button @click="viewOrder(order.id)">View</button>
+            <button @click="viewOrder(order._id)">View</button>
           </td>
         </tr>
       </tbody>
     </table>
+    <p v-if="error" style="color: red;">{{ error }}</p>
   </div>
 </template>
 
@@ -33,23 +34,45 @@ export default {
   data() {
     return {
       orders: [],
+      error: null,
     };
   },
   async created() {
-    const token = localStorage.getItem("token");
-    const response = await fetch("https://sneaker-config.onrender.com/api/v1/orders", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    this.orders = await response.json();
+    try {
+      const response = await fetch("https://sneaker-config.onrender.com/api/v1/orders", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+      if (!response.ok) throw new Error("Failed to fetch orders");
+      this.orders = await response.json();
+    } catch (err) {
+      this.error = err.message;
+    }
   },
   methods: {
     formatDate(dateString) {
       const options = { year: "numeric", month: "long", day: "numeric" };
       return new Date(dateString).toLocaleDateString(undefined, options);
     },
-    viewOrder(id) {
-      this.$router.push(`/orders/${id}`);
+    viewOrder(orderId) {
+      this.$router.push(`/orders/${orderId}`);
     },
   },
 };
 </script>
+
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+</style>

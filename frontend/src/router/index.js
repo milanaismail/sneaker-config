@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import AdminLogin from "../components/AdminLogin.vue";
 import OrdersOverview from "../components/OrdersOverview.vue";
+import OrderDetails from "../components/OrdersDetails.vue";
 
 const routes = [
-  { path: "/login", component: AdminLogin }, // Login page
-  { path: "/orders", component: OrdersOverview }, // Orders overview
+  { path: "/orders", component: OrdersOverview },
+  { path: "/orders/:id", component: OrderDetails },
 ];
 
 const router = createRouter({
