@@ -2,7 +2,7 @@
 var express = require("express");
 var router = express.Router();
 const ordersController = require("../../../controllers/api/v1/orders.js");
-const admin = require("../../../middleware/admin.js");
+const admin = require("../../../middleware/auth.js");
 
 // GET /api/v1/orders - Get all orders
 router.get("/", ordersController.getAll);

@@ -5,7 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
 
-const admin = require("./middleware/admin");
+const admin = require("./middleware/auth");
 var orderRouter = require("./routes/api/v1/orders");
 var usersRouter = require("./routes/api/v1/users");
 
