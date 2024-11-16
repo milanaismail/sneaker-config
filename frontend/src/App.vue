@@ -1,20 +1,17 @@
 <template>
     <div id="app">
-      <h1>Hello Vue with Vite!</h1>
+      <h1>Welcome to Sneaker Config</h1>
+      <Orders />
     </div>
   </template>
   
   <script>
+  import Orders from "./components/Orders.vue";
+  
   export default {
-    name: "App",
+    components: {
+      Orders,
+    },
   };
   </script>
-  
-  <style>
-  #app {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    color: #333;
-  }
-  </style>
   
