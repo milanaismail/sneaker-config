@@ -6,7 +6,7 @@
   </template>
   
   <script>
-  import Orders from "./components/Orders.vue";
+  import Orders from "./components/OrdersList.vue";
   
   export default {
     components: {
