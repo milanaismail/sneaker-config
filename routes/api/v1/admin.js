@@ -3,8 +3,9 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../../models/User");
+require("dotenv").config(); // Load environment variables
 
-const SECRET_KEY = "123"; 
+const SECRET_KEY = process.env.SECRET_KEY;
 
 // POST /api/admin/add - Add a new admin
 router.post("/add", async (req, res) => {
@@ -41,7 +42,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: admin._id, role: admin.role }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign({ id: user._id, role: user.role }, SECRET_KEY, { expiresIn: "1h" });
     res.json({ token });
   } catch (error) {
     res.status(500).json({ message: "Error logging in", error });
