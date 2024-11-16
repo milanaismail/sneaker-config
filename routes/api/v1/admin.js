@@ -32,10 +32,11 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    console.log("Login attempt for:", email); // Debugging log
     const admin = await User.findOne({ email, role: "admin" });
-    console.log("Admin found:", admin); // Log the admin object
 
     if (!admin) {
+        console.log("Admin not found or unauthorized");
       return res.status(403).json({ message: "Unauthorized" });
     }
 
