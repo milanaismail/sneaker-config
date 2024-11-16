@@ -5,5 +5,6 @@ console.log("Orders Controller:", ordersController);
 
 router.get("/", ordersController.getOrdersOverview); 
 router.get("/:id", ordersController.getOrderDetails); // Details
+router.post("/", ordersController.createOrder);
 
 module.exports = router;
