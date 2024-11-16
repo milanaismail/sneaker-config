@@ -31,7 +31,7 @@
             throw new Error("Invalid login credentials");
           }
           const data = await response.json();
-          localStorage.setItem("token", data.token);
+          localStorage.setItem("token", data.token); // Store token
           this.$router.push("/orders"); // Redirect to orders overview
         } catch (err) {
           this.error = err.message;
@@ -40,4 +40,17 @@
     },
   };
   </script>
+  
+  <style>
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  input, button {
+    margin: 10px 0;
+    padding: 10px;
+  }
+  </style>
   
