@@ -33,11 +33,15 @@ router.post("/login", async (req, res) => {
 
   try {
     const admin = await User.findOne({ email, role: "admin" });
+    console.log("Admin found:", admin); // Log the admin object
+
     if (!admin) {
       return res.status(403).json({ message: "Unauthorized" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, admin.password);
+    console.log("Password valid:", isPasswordValid); // Log password comparison result
+
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -45,6 +49,7 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ id: user._id, role: user.role }, SECRET_KEY, { expiresIn: "1h" });
     res.json({ token });
   } catch (error) {
+    console.error("Error logging in:", error);
     res.status(500).json({ message: "Error logging in", error });
   }
 });
