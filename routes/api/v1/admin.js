@@ -34,6 +34,7 @@ router.post("/login", async (req, res) => {
   try {
     console.log("Login attempt for:", email); // Debugging log
     const admin = await User.findOne({ email, role: "admin" });
+    console.log("Admin found:", admin);
 
     if (!admin) {
         console.log("Admin not found or unauthorized");
@@ -47,11 +48,17 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign({ id: admin._id, role: admin.role }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign(
+      { id: admin._id, role: admin.role },
+      process.env.SECRET_KEY || "your_secret_key",
+      { expiresIn: "1h" }
+    );
+    console.log("Token generated successfully");
+
     res.json({ token });
   } catch (error) {
-    console.error("Error logging in:", error);
-    res.status(500).json({ message: "Error logging in", error });
+    console.error("Error during login:", error);
+    res.status(500).json({ message: "Internal Server Error", error });
   }
 });
 
