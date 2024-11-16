@@ -37,7 +37,7 @@ export default {
   },
   async created() {
     const token = localStorage.getItem("token");
-    const response = await fetch("https://sneaker-config.onrender.com/api/orders", {
+    const response = await fetch("https://sneaker-config.onrender.com/api/v1/orders", {
       headers: { Authorization: `Bearer ${token}` },
     });
     this.orders = await response.json();
