@@ -16,9 +16,9 @@
         <tr v-for="order in orders" :key="order._id">
           <td>{{ order._id }}</td>
           <td>{{ formatDate(order.createdAt) }}</td>
-          <td>{{ order.customer.fullName }}</td>
-          <td>{{ order.totalPrice }}</td>
-          <td>{{ order.status }}</td>
+          <td>{{ order.customer?.fullName || "N/A" }}</td>
+          <td>{{ order.totalPrice || "N/A" }}</td>
+          <td>{{ order.status || "N/A" }}</td>
           <td>
             <button @click="viewOrder(order._id)">View</button>
           </td>
