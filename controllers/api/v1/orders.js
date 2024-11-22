@@ -50,8 +50,35 @@ const getOrderDetails = async (req, res) => {
   }
 };
 
+// PUT /api/v1/orders/:id - Update Order Status
+const updateOrderStatus = async (req, res) => {
+  try {
+    const { id } = req.params; // Get the order ID from the route parameter
+    const { status } = req.body; // Get the new status from the request body
+
+    // Validate the status
+    const validStatuses = ["Pending", "Delivered", "Cancelled"];
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
+
+    // Find the order by ID and update its status
+    const order = await Order.findByIdAndUpdate(id, { status }, { new: true });
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.json({ message: "Order status updated successfully", order });
+  } catch (error) {
+    console.error("Error updating order status:", error);
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
 module.exports = {
   createOrder,
   getOrdersOverview,
   getOrderDetails,
+  updateOrderStatus, 
 };
