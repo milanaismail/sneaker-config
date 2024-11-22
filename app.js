@@ -32,21 +32,15 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5175"], // Allow requests from your Vue dev server
+    origin: ["http://localhost:5173", "http://localhost:5175", "https://sneaker-config-mauve.vercel.app"], // Allow your local dev server and deployed Vercel frontend
     methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific HTTP methods
     credentials: true, // If your API uses cookies or other credentials
   })
 );
+
 app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/admin", adminRouter);
-// Serve static files from the Vite build directory
-app.use(express.static(path.join(__dirname, "frontend/dist")));
-
-// Catch-all route to serve the Vite app
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend/dist", "index.html"));
-});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
