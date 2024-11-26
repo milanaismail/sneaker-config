@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema({
     lastName: { type: String, required: true },
     email: { type: String, required: true },
     phone: { type: String, required: true },
-    adress: { type: String, required: true },
+    address: { type: String, required: true },
     postalCode: { type: Number, required: true },
     city: { type: Number, required: true },
   },
