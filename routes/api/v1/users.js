@@ -15,4 +15,7 @@ router.post("/logout", auth, usersController.logout);
 // PUT /api/v1/users/password - Update password (authenticated)
 router.put("/password", auth, usersController.updatePassword);
 
+router.delete("/:id", ordersController.deleteOrder); // Delete Order
+
+
 module.exports = router;
