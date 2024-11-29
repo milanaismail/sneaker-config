@@ -11,12 +11,13 @@ const createOrder = async (req, res) => {
     // Create an array of products with the shoeConfig directly included
     const products = [
       {
-        productId: "shoe123", // example product ID, should be dynamic
+        productId: "", // example product ID, should be dynamic
         colors: shoeConfig.colors,
         fabrics: shoeConfig.fabrics,
         size: shoeConfig.size,
         price: totalPrice,
         quantity: 1,
+        initials: shoeConfig.initials || null, 
       },
     ];
 
