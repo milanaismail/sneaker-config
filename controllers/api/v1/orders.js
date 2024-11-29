@@ -2,18 +2,29 @@ const Order = require("../../../models/Order");
 
 const createOrder = async (req, res) => {
   try {
-    const { customer, products, totalPrice, status, shoeConfig } = req.body;
+    const { customer, shoeConfig, totalPrice, status } = req.body;
 
-    if (!customer || !products || !totalPrice || !shoeConfig) {
+    if (!customer || !shoeConfig || !totalPrice) {
       return res.status(400).json({ message: "Missing required fields" });
     }
+
+    // Create an array of products with the shoeConfig directly included
+    const products = [
+      {
+        productId: "shoe123", // example product ID, should be dynamic
+        colors: shoeConfig.colors,
+        fabrics: shoeConfig.fabrics,
+        size: shoeConfig.size,
+        price: totalPrice,
+        quantity: 1,
+      },
+    ];
 
     const order = new Order({
       customer,
       products,
       totalPrice,
       status: status || "Pending",
-      shoeConfig,
     });
 
     await order.save();
@@ -24,6 +35,7 @@ const createOrder = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
+
 
 
 

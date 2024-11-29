@@ -25,14 +25,9 @@ const orderSchema = new mongoose.Schema({
       size: { type: Number, required: true },
       price: { type: Number, required: true },
       quantity: { type: Number, required: true },
+      initials: { type: String, default: null }, // Optional initials
     },
   ],
-  shoeConfig: {
-    colors: { type: Object, required: true }, // {laces: "blue", sole: "red"}
-    fabrics: { type: Object, required: true }, // {laces: "cotton", sole: "rubber"}
-    size: { type: Number, required: true },
-    initials: { type: String, required: false }, // Optional
-  },
 });
 
 module.exports = mongoose.model("Order", orderSchema);
