@@ -37,7 +37,13 @@ app.use(
     credentials: true, // If your API uses cookies or other credentials
   })
 );
-
+app.options("*", cors());
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // Allow all origins or specify the exact domain
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 app.use("/api/v1/orders", orderRouter);
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/admin", adminRouter);
