@@ -4,28 +4,24 @@ const createOrder = async (req, res) => {
   try {
     const { customer, products, totalPrice, status, shoeConfig } = req.body;
 
-    // Validate required fields
     if (!customer || !products || !totalPrice || !shoeConfig) {
-      return res
-        .status(400)
-        .json({ message: "Customer, products, totalPrice, and shoeConfig are required" });
+      return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Create a new order
     const order = new Order({
       customer,
       products,
       totalPrice,
       status: status || "Pending",
-      shoeConfig, // This already contains the size
+      shoeConfig,
     });
 
     await order.save();
 
-    res.status(201).json({ message: "Order created successfully", order });
+    return res.status(201).json({ message: "Order created successfully", order });
   } catch (error) {
     console.error("Error creating order:", error);
-    res.status(500).json({ message: "Internal Server Error", error: error.message });
+    return res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
 
