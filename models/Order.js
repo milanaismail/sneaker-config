@@ -2,7 +2,11 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
-  status: { type: String, enum: ["Pending", "Processing", "Shipped", "Delivered"], default: "Pending" },
+  status: {
+    type: String,
+    enum: ["Pending", "Processing", "Shipped", "Delivered"],
+    default: "Pending",
+  },
   totalPrice: { type: Number, required: true },
   customer: {
     firstName: { type: String, required: true },
@@ -23,6 +27,12 @@ const orderSchema = new mongoose.Schema({
       quantity: { type: Number, required: true },
     },
   ],
+  shoeConfig: {
+    colors: { type: Object, required: true }, // {laces: "blue", sole: "red"}
+    fabrics: { type: Object, required: true }, // {laces: "cotton", sole: "rubber"}
+    size: { type: Number, required: true },
+    initials: { type: String, required: false }, // Optional
+  },
 });
 
 module.exports = mongoose.model("Order", orderSchema);

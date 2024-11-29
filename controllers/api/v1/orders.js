@@ -3,11 +3,18 @@ const Order = require("../../../models/Order");
 //post
 const createOrder = async (req, res) => {
   try {
-    const { customer, products, totalPrice, status } = req.body;
+    const { customer, products, totalPrice, status, shoeConfig } = req.body;
 
     // Validate required fields
     if (!customer || !products || !totalPrice) {
-      return res.status(400).json({ message: "Customer, products, and totalPrice are required" });
+      return res
+        .status(400)
+        .json({ message: "Customer, products, and totalPrice are required" });
+    }
+
+    // Validate shoeConfig (optional if always included)
+    if (!shoeConfig) {
+      return res.status(400).json({ message: "Shoe configuration is required" });
     }
 
     // Create a new order
@@ -16,17 +23,23 @@ const createOrder = async (req, res) => {
       products,
       totalPrice,
       status: status || "Pending",
+      shoeConfig, // Include the shoe configuration
     });
 
     // Save order to database
     await order.save();
 
-    res.status(201).json({ message: "Order created successfully", order });
+    res
+      .status(201)
+      .json({ message: "Order created successfully", order });
   } catch (error) {
     console.error("Error creating order:", error);
-    res.status(500).json({ message: "Internal Server Error", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Internal Server Error", error: error.message });
   }
 };
+
 
 // GET /api/v1/orders - Overview
 const getOrdersOverview = async (req, res) => {
