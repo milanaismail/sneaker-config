@@ -5,14 +5,10 @@ const createOrder = async (req, res) => {
     const { customer, products, totalPrice, status, shoeConfig } = req.body;
 
     // Validate required fields
-    if (!customer || !products || !totalPrice) {
+    if (!customer || !products || !totalPrice || !shoeConfig) {
       return res
         .status(400)
-        .json({ message: "Customer, products, and totalPrice are required" });
-    }
-
-    if (!shoeConfig) {
-      return res.status(400).json({ message: "Shoe configuration is required" });
+        .json({ message: "Customer, products, totalPrice, and shoeConfig are required" });
     }
 
     // Create a new order
@@ -21,7 +17,7 @@ const createOrder = async (req, res) => {
       products,
       totalPrice,
       status: status || "Pending",
-      shoeConfig,
+      shoeConfig, // This already contains the size
     });
 
     await order.save();
@@ -32,6 +28,7 @@ const createOrder = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
+
 
 
 // GET /api/v1/orders - Overview
