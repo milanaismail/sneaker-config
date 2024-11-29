@@ -86,9 +86,30 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
+// DELETE /api/v1/orders/:id - Delete Order
+const deleteOrder = async (req, res) => {
+  try {
+    const { id } = req.params; // Get the order ID from the route parameter
+
+    // Find and delete the order by ID
+    const order = await Order.findByIdAndDelete(id);
+
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.json({ message: "Order deleted successfully", order });
+  } catch (error) {
+    console.error("Error deleting order:", error);
+    res.status(500).json({ message: "Internal Server Error", error: error.message });
+  }
+};
+
+
 module.exports = {
   createOrder,
   getOrdersOverview,
   getOrderDetails,
   updateOrderStatus, 
+  deleteOrder,
 };
