@@ -41,7 +41,7 @@ const createOrder = async (req, res) => {
 // GET /api/v1/orders - Overview
 const getOrdersOverview = async (req, res) => {
   try {
-    const orders = await Order.find({}, "id createdAt customer.fullName totalPrice status");
+    const orders = await Order.find({}, "id createdAt customer.firstName customer.lastName totalPrice status");
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving orders", error });
