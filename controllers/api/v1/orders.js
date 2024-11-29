@@ -1,25 +1,36 @@
 const Order = require("../../../models/Order");
-
 const createOrder = async (req, res) => {
   try {
     const { customer, shoeConfig, totalPrice, status } = req.body;
 
+    // Log the request to ensure it contains all necessary data
+    console.log("Received order request:", req.body);
+
+    // Check if the required fields are provided
     if (!customer || !shoeConfig || !totalPrice) {
       return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    // Ensure shoeConfig contains necessary product details
+    if (!shoeConfig.colors || !shoeConfig.fabrics || !shoeConfig.size) {
+      return res.status(400).json({ message: "Missing product details in shoe configuration" });
     }
 
     // Create an array of products with the shoeConfig directly included
     const products = [
       {
-        productId: "", // example product ID, should be dynamic
+        productId: shoeConfig.productId || "default-product-id", // Ensure productId is dynamic
         colors: shoeConfig.colors,
         fabrics: shoeConfig.fabrics,
         size: shoeConfig.size,
         price: totalPrice,
         quantity: 1,
-        initials: shoeConfig.initials || null, 
+        initials: shoeConfig.initials || null, // Optional initials
       },
     ];
+
+    // Log the product data for debugging
+    console.log("Created order object:", products);
 
     const order = new Order({
       customer,
@@ -36,7 +47,6 @@ const createOrder = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error", error: error.message });
   }
 };
-
 
 
 
