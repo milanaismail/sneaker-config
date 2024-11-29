@@ -1,22 +1,31 @@
 const Order = require("../../../models/Order");
 
-//post
 const createOrder = async (req, res) => {
   try {
-    const { products, totalPrice, shoeConfig } = req.body;
+    const { customer, products, totalPrice, status, shoeConfig } = req.body;
 
-    if (!shoeConfig || !products || !totalPrice) {
-      return res.status(400).json({ message: "Invalid order data" });
+    // Validate required fields
+    if (!customer || !products || !totalPrice) {
+      return res
+        .status(400)
+        .json({ message: "Customer, products, and totalPrice are required" });
     }
 
+    if (!shoeConfig) {
+      return res.status(400).json({ message: "Shoe configuration is required" });
+    }
+
+    // Create a new order
     const order = new Order({
+      customer,
       products,
       totalPrice,
+      status: status || "Pending",
       shoeConfig,
-      status: "Pending",
     });
 
     await order.save();
+
     res.status(201).json({ message: "Order created successfully", order });
   } catch (error) {
     console.error("Error creating order:", error);
@@ -24,31 +33,6 @@ const createOrder = async (req, res) => {
   }
 };
 
-const updateOrderWithCustomerInfo = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { customer } = req.body;
-
-    if (!customer) {
-      return res.status(400).json({ message: "Customer information is required" });
-    }
-
-    const order = await Order.findByIdAndUpdate(
-      id,
-      { customer },
-      { new: true }
-    );
-
-    if (!order) {
-      return res.status(404).json({ message: "Order not found" });
-    }
-
-    res.json({ message: "Order updated successfully", order });
-  } catch (error) {
-    console.error("Error updating order:", error);
-    res.status(500).json({ message: "Internal Server Error", error: error.message });
-  }
-};
 
 // GET /api/v1/orders - Overview
 const getOrdersOverview = async (req, res) => {
@@ -103,5 +87,4 @@ module.exports = {
   getOrdersOverview,
   getOrderDetails,
   updateOrderStatus, 
-  updateOrderWithCustomerInfo
 };
