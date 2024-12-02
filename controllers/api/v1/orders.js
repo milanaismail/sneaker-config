@@ -20,12 +20,15 @@ const createOrder = async (req, res) => {
       }
     });
 
+    const SHIPPING_COST = 20;
+
     // Create the order object and save it
     const newOrder = new Order({
       customer,
       products,
-      totalPrice,
-      status: status || "Pending",  // Default to "Pending" if no status is provided
+      totalPrice: totalPrice + SHIPPING_COST, // Add shipping cost to total price
+      status: status || "Pending", // Default to "Pending" if no status is provided
+      shippingCost: SHIPPING_COST, // Default to "Pending" if no status is provided
     });
 
     await newOrder.save();

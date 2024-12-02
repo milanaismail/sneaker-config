@@ -28,6 +28,7 @@ const orderSchema = new mongoose.Schema({
       initials: { type: String, default: null }, // Optional initials
     },
   ],
+  shippingCost: { type: Number, default: 20 },
 });
 
 module.exports = mongoose.model("Order", orderSchema);
