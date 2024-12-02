@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema({
   },
   products: [
     {
-      productId: { type: String, required: true },
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true }, // Dynamically reference Product model
       colors: { type: Object, required: true },
       fabrics: { type: Object, required: true },
       size: { type: Number, required: true },

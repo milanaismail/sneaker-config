@@ -2,10 +2,6 @@ const Order = require("../../../models/Order");
 const createOrder = async (req, res) => {
   try {
     const { customer, products, totalPrice, status } = req.body;
-
-    // Log the full request body for debugging
-    console.log("Received order request:", JSON.stringify(req.body, null, 2));  // Pretty print for clarity
-
     // Check if required fields are provided
     if (!customer || !products || !totalPrice) {
       return res.status(400).json({ message: "Missing required fields" });
@@ -13,8 +9,6 @@ const createOrder = async (req, res) => {
 
     // Ensure each product has the necessary details
     products.forEach((product, index) => {
-      console.log(`Product ${index}: colors`, product.colors); // Log colors for debugging
-      console.log(`Product ${index}: fabrics`, product.fabrics); // Log fabrics for debugging
       if (!product.colors || !product.fabrics || !product.size) {
         return res.status(400).json({ message: `Missing product details at index ${index}` });
       }
