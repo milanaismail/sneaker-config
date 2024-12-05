@@ -32,7 +32,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors());
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "https://sneaker-config-mauve.vercel.app", "https://threejs-sneaker-configurator.onrender.com"], // Allow your local dev server and deployed Vercel frontend
+    origin: ["http://localhost:5173", "http://localhost:5174", "http://localhost:5175", "https://sneaker-config.onrender.com", "https://threejs-sneaker-configurator.onrender.com"], // Allow your local dev server and deployed Vercel frontend
     methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific HTTP methods
     credentials: true, // If your API uses cookies or other credentials
   })
