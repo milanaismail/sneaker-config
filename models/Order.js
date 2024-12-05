@@ -9,6 +9,7 @@ const orderSchema = new mongoose.Schema({
   },
   totalPrice: { type: Number, required: true },
   customer: {
+    _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true },
@@ -19,6 +20,7 @@ const orderSchema = new mongoose.Schema({
   },
   products: [
     {
+      _id: { type: mongoose.Schema.Types.ObjectId, auto: true },
       colors: { type: Object, required: true },
       fabrics: { type: Object, required: true },
       size: { type: Number, required: true },
