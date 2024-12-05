@@ -62,4 +62,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.get("/test", (req, res) => {
+  res.send("Admin route is working");
+});
+
 module.exports = router;
