@@ -1,6 +1,6 @@
 const Order = require("../../../models/Order");
-const authenticate = require("../../../middlewares/auth");
-const authorizeAdmin = require("../../../middlewares/roleMiddleware");
+const authenticate = require("../../../middleware/auth");
+const authorizeAdmin = require("../../../middleware/roleMiddleware");
 
 
 const createOrder = async (req, res) => {
