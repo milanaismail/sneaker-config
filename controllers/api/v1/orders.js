@@ -38,8 +38,15 @@ const createOrder = async (req, res) => {
 // GET /api/v1/orders - Overview
 const getOrdersOverview = async (req, res) => {
   try {
-    const orders = await Order.find({}, "id createdAt customer.firstName customer.lastName totalPrice status");
-    res.json(orders);
+    const orders = await Order.find({}, "id createdAt customer.firstName customer.lastName totalPrice status shippingCost");
+    
+    // Adjusting the totalPrice by subtracting shipping cost for display
+    const ordersOverview = orders.map(order => ({
+      ...order.toObject(),
+      totalPrice: order.totalPrice - order.shippingCost // Remove the shipping cost from the total price
+    }));
+    
+    res.json(ordersOverview);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving orders", error });
   }
