@@ -1,4 +1,8 @@
 const Order = require("../../../models/Order");
+const authenticate = require("../../../middlewares/auth");
+const authorizeAdmin = require("../../../middlewares/roleMiddleware");
+
+
 const createOrder = async (req, res) => {
   try {
     const { customer, products, totalPrice, status } = req.body;
@@ -36,35 +40,44 @@ const createOrder = async (req, res) => {
 
 
 // GET /api/v1/orders - Overview
-const getOrdersOverview = async (req, res) => {
-  try {
-    const orders = await Order.find({}, "id createdAt customer.firstName customer.lastName totalPrice status shippingCost");
-    
-    // Adjusting the totalPrice by subtracting shipping cost for display
-    const ordersOverview = orders.map(order => ({
-      ...order.toObject(),
-      totalPrice: order.totalPrice - order.shippingCost // Remove the shipping cost from the total price
-    }));
-    
-    res.json(ordersOverview);
-  } catch (error) {
-    res.status(500).json({ message: "Error retrieving orders", error });
+const getOrdersOverview = [
+  authenticate, 
+  authorizeAdmin,
+  async (req, res) => {
+    try {
+      const orders = await Order.find({}, "id createdAt customer.firstName customer.lastName totalPrice status shippingCost");
+
+      const ordersOverview = orders.map(order => ({
+        ...order.toObject(),
+        totalPrice: order.totalPrice - order.shippingCost,
+      }));
+
+      res.json(ordersOverview);
+    } catch (error) {
+      res.status(500).json({ message: "Error retrieving orders", error });
+    }
   }
-};
+];
 
 // GET /api/v1/orders/:id - Detailed View
-const getOrderDetails = async (req, res) => {
-  try {
-    const order = await Order.findById(req.params.id);
-    if (!order) return res.status(404).json({ message: "Order not found" });
-    order.products.forEach((product, index) => {
-      product.productId = product._id || `Product-${index + 1}`;
-    });
-    res.json(order);
-  } catch (error) {
-    res.status(500).json({ message: "Error retrieving order details", error });
+const getOrderDetails = [
+  authenticate, 
+  authorizeAdmin,
+  async (req, res) => {
+    try {
+      const order = await Order.findById(req.params.id);
+      if (!order) return res.status(404).json({ message: "Order not found" });
+
+      order.products.forEach((product, index) => {
+        product.productId = product._id || `Product-${index + 1}`;
+      });
+
+      res.json(order);
+    } catch (error) {
+      res.status(500).json({ message: "Error retrieving order details", error });
+    }
   }
-};
+];
 
 // PUT /api/v1/orders/:id - Update Order Status
 const updateOrderStatus = async (req, res) => {
