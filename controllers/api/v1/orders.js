@@ -67,6 +67,12 @@ const getOrderDetails = [
       const order = await Order.findById(req.params.id);
       if (!order) return res.status(404).json({ message: "Order not found" });
 
+      // Restrict access to the order owner
+      if (order.customer.email !== req.user.email) {
+        return res.status(403).json({ message: "You are not authorized to view this order." });
+      }
+
+      // Ensure each product has a productId fallback
       order.products.forEach((product, index) => {
         product.productId = product._id || `Product-${index + 1}`;
       });
@@ -77,6 +83,7 @@ const getOrderDetails = [
     }
   }
 ];
+
 
 // PUT /api/v1/orders/:id - Update Order Status
 const updateOrderStatus = async (req, res) => {
