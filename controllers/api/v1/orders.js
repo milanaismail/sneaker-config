@@ -62,7 +62,6 @@ const getOrdersOverview = [
 // GET /api/v1/orders/:id - Detailed View
 const getOrderDetails = [
   authenticate, 
-  authorizeAdmin,
   async (req, res) => {
     try {
       const order = await Order.findById(req.params.id);
