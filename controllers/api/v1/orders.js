@@ -60,8 +60,7 @@ const getOrdersOverview = [
 ];
 
 // GET /api/v1/orders/:id - Detailed View
-const getOrderDetails = [
-  authenticate, 
+const getOrderDetails = 
   async (req, res) => {
     try {
       const order = await Order.findById(req.params.id);
@@ -82,7 +81,6 @@ const getOrderDetails = [
       res.status(500).json({ message: "Error retrieving order details", error });
     }
   }
-];
 
 
 // PUT /api/v1/orders/:id - Update Order Status
