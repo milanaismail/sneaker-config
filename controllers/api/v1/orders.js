@@ -60,27 +60,18 @@ const getOrdersOverview = [
 ];
 
 // GET /api/v1/orders/:id - Detailed View
-const getOrderDetails = 
-  async (req, res) => {
-    try {
-      const order = await Order.findById(req.params.id);
-      if (!order) return res.status(404).json({ message: "Order not found" });
-
-      // Restrict access to the order owner
-      if (order.customer.email !== req.user.email) {
-        return res.status(403).json({ message: "You are not authorized to view this order." });
-      }
-
-      // Ensure each product has a productId fallback
-      order.products.forEach((product, index) => {
-        product.productId = product._id || `Product-${index + 1}`;
-      });
-
-      res.json(order);
-    } catch (error) {
-      res.status(500).json({ message: "Error retrieving order details", error });
-    }
+const getOrderDetails = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json({ message: "Order not found" });
+    order.products.forEach((product, index) => {
+      product.productId = product._id || `Product-${index + 1}`;
+    });
+    res.json(order);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving order details", error });
   }
+};
 
 
 // PUT /api/v1/orders/:id - Update Order Status
