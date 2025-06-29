@@ -11,7 +11,7 @@ var usersRouter = require("./routes/api/v1/users");
 
 const mongoose = require("mongoose");
 const uri =
-  "mongodb+srv://milanais:exF4C2AqiKzb0fqx@cluster0.8mhkb.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://milanais:n5c3yhOc74zRUdDR@cluster0.8mhkb.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose
   .connect(uri)

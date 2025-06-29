@@ -1,7 +1,6 @@
 const User = require("../../../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const SECRET_KEY = "your_secret_key"; // Replace with environment variable for production
 
 // Register a new user
 const register = async (req, res) => {
